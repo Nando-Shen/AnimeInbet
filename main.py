@@ -5,8 +5,6 @@ import yaml
 from pprint import pprint
 from easydict import EasyDict
 
-
-
 def parse_args():
     parser = argparse.ArgumentParser(
         description='Anime segment matching')
@@ -25,7 +23,7 @@ def main():
     # parse arguments and load config
     args = parse_args()
     with open(args.config) as f:
-        config = yaml.load(f)
+        config = yaml.load(f, Loader=yaml.CLoader)
 
     for k, v in vars(args).items():
         config[k] = v
