@@ -175,7 +175,7 @@ class MixamoLineArtMotionSequence(data.Dataset):
             if skip:
                 continue
             image_list = sorted(glob(osp.join(self.data_root, clip, 'frame*.jpg')))
-            print(len(image_list))
+            # print(len(image_list))
             label_list = sorted(glob(osp.join(self.label_root, clip, '*.json')))
             if len(image_list) != len(label_list):
                 print(clip, flush=True)
