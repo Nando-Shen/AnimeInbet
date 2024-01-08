@@ -28,10 +28,10 @@ def read_json(file_path):
 
     with open(file_path) as file:
         data = json.load(file)
-        vertex2d = np.array(data['vertex location'])
+        vertex2d = np.array(data['keypoints'])
         
-        topology = data['connection']
-        index = np.array(data['original index'])
+        topology = data['topo']
+        index = np.array(data['id'])
 
     return vertex2d, topology, index
 
