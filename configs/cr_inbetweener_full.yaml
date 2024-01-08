@@ -21,17 +21,17 @@ optimizer:
 
 data:
     train:
-        root: 'data/ml144_norm_100_44_split/'
+        root: '/share/kuhu6123/atd12k_points/atd12k_points'
         batch_size: 1
-        gap: 5
+        gap: 1
         type: 'train'
         model: None
         action: None
         mode: 'train'
     test:
-        root: 'data/ml100_norm/'
+        root: '/share/kuhu6123/atd12k_points/atd12k_points'
         batch_size: 1
-        gap: 5
+        gap: 1
         type: 'all'
         model: None
         action: None

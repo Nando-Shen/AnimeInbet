@@ -140,6 +140,12 @@ class MixamoLineArtMotionSequence(data.Dataset):
 
         self.is_train = True if mode == 'train' else False
         self.is_eval = True if mode == 'eval' else False
+        if self.is_train:
+            self.label_root = os.path.join(root, 'train_10k_label')
+            self.data_root = os.path.join(root, 'train_10k')
+        else:
+            self.label_root = os.path.join(root, 'test_2k_label')
+            self.data_root = os.path.join(root, 'test_2k_540p')
         # self.is_train = False
         self.max_len = max_len
 
@@ -155,7 +161,7 @@ class MixamoLineArtMotionSequence(data.Dataset):
         image_root = osp.join(root, split, 'frames')
         self.spectral = Spectral(64,  normalized=False)
 
-        for clip in os.listdir(image_root):
+        for clip in os.listdir(self.data_root):
             skip = False
             if model != None:
                 for mm in model:
@@ -168,7 +174,8 @@ class MixamoLineArtMotionSequence(data.Dataset):
                         skip = True
             if skip:
                 continue
-            image_list = sorted(glob(osp.join(image_root, clip, '*.png')))
+            image_list = sorted(glob(osp.join(image_root, clip, 'frame*.jpg')))
+            print(len(image_list))
             label_list = sorted(glob(osp.join(label_root, clip, '*.json')))
             if len(image_list) != len(label_list):
                 print(clip, flush=True)
