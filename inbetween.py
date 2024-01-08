@@ -60,9 +60,9 @@ class DraftRefine():
         
         model = self.model
 
-        checkpoint = torch.load(self.config.corr_weights)
-        dict = {k.replace('module.', ''): checkpoint['model'][k] for k in checkpoint['model']}
-        model.module.corr.load_state_dict(dict)
+        # checkpoint = torch.load(self.config.corr_weights)
+        # dict = {k.replace('module.', ''): checkpoint['model'][k] for k in checkpoint['model']}
+        # model.module.corr.load_state_dict(dict)
 
         if hasattr(self.config, 'init_weight'):
             checkpoint = torch.load(self.config.init_weight)
