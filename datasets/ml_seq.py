@@ -141,10 +141,10 @@ class MixamoLineArtMotionSequence(data.Dataset):
         self.is_train = True if mode == 'train' else False
         self.is_eval = True if mode == 'eval' else False
         if self.is_train:
-            self.label_root = os.path.join(root, 'train_10k_label')
+            self.label_root = os.path.join(root, 'train_10k_label/train_10k_label')
             self.data_root = os.path.join(root, 'train_10k')
         else:
-            self.label_root = os.path.join(root, 'test_2k_label')
+            self.label_root = os.path.join(root, 'test_2k_label/test_2k_label')
             self.data_root = os.path.join(root, 'test_2k_540p')
         # self.is_train = False
         self.max_len = max_len
