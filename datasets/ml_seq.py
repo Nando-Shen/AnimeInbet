@@ -402,8 +402,10 @@ class MixamoLineArtMotionSequence(data.Dataset):
             topo1[ii].append(ii)
         for ii in range(len(topo2)):
             topo2[ii].append(ii)
+        print(topo1.shape)
         adj1 = sknetwork.data.from_adjacency_list(topo1, matrix_only=True, reindex=False).toarray()
         adj2 = sknetwork.data.from_adjacency_list(topo2, matrix_only=True, reindex=False).toarray()
+        print(len(adj1))
 
         try:
             spec0, spec1 = np.abs(self.spectral.fit_transform(adj1)), np.abs(self.spectral.fit_transform(adj2))
