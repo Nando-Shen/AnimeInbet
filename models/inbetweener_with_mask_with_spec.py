@@ -302,7 +302,9 @@ class SuperGlueT(nn.Module):
 
         ori_mask0, ori_mask1 = data['mask0'].float(), data['mask1'].float()
         dim_m, dim_n = data['ms'].float(), data['ns'].float()
-
+        print("m: {}".format(dim_m))
+        print("n: {}".format(dim_n))
+        print("ktps: {}".format(kpts0))
         # spectual embedding of adj matrices
         # here I find that online computation of spectrals are too slow during training
         # so the spectrual embedding is moved to dataset pipeline 

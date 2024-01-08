@@ -344,8 +344,6 @@ class MixamoLineArtMotionSequence(data.Dataset):
         topo1 = labelt[0]['topo']
 
         m, n = len(v2d1), len(v2d2)
-        print("m:{}".format(m))
-        print("n:{}".format(n))
 
         if len(img1.shape) == 2:
             img1 = np.tile(img1[...,None], (1, 1, 3))
