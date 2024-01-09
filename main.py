@@ -4,6 +4,7 @@ import os
 import yaml
 from pprint import pprint
 from easydict import EasyDict
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 
 def parse_args():
     parser = argparse.ArgumentParser(

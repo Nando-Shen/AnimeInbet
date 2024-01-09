@@ -409,7 +409,7 @@ class MixamoLineArtMotionSequence(data.Dataset):
             topo2[ii].append(ii)
         adj1 = sknetwork.data.from_adjacency_list(topo1, matrix_only=True, reindex=False).toarray()
         adj2 = sknetwork.data.from_adjacency_list(topo2, matrix_only=True, reindex=False).toarray()
-        print("topo:  {}  adj1:  {}".format(len(topo1),len(adj1)))
+        # print("topo:  {}  adj1:  {}".format(len(topo1),len(adj1)))
         # print(adj1)
 
         try:
