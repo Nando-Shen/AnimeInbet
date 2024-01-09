@@ -36,7 +36,7 @@ data:
         model: None
         action: None
         mode: 'eval'
-        use_vs: False
+        use_vs: True
 
 testing:
     ckpt_epoch: 20
