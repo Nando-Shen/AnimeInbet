@@ -470,6 +470,7 @@ class InbetweenerTM(nn.Module):
         nmax = dim_n.int().max()
         # with torch.no_grad():
         #     self.corr.eval()
+        print("already here")
         score01, score0, score1, dec0, dec1 = self.corr(data)
 
 
