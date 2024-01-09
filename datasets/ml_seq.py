@@ -298,18 +298,18 @@ class MixamoLineArtMotionSequence(data.Dataset):
 
             id1 = labelt[ii]['id']
             id2 = labelt[ii - 1]['id']
-        #     if self.use_vs:
-        #         id1 = np.arange(len(id1))
-        #         id2 = np.arange(len(id2))
-        #     _, match12, _ = ids_to_mat(id1, id2)
-        #
-        #     if ii >= start_frame + gap + 1:
-        #         motion21 = matched_motion(v2d1, v2d2, match12.astype(int), motion21)
-        #         motion21 = unmatched_motion(topo1, v2d1, motion21, match12.astype(int))
-        #
-        #     motion = matched_motion(v2d1, v2d2, match12.astype(int), motion)
-        #     motion = unmatched_motion(topo1, v2d1, motion, match12.astype(int))
-        #
+            if self.use_vs:
+                id1 = np.arange(len(id1))
+                id2 = np.arange(len(id2))
+            _, match12, _ = ids_to_mat(id1, id2)
+
+            if ii >= start_frame + gap + 1:
+                motion21 = matched_motion(v2d1, v2d2, match12.astype(int), motion21)
+                motion21 = unmatched_motion(topo1, v2d1, motion21, match12.astype(int))
+
+            motion = matched_motion(v2d1, v2d2, match12.astype(int), motion)
+            motion = unmatched_motion(topo1, v2d1, motion, match12.astype(int))
+
         motion2 = motion.copy()
 
         img1 = imgt[start_frame + 2*gap]
