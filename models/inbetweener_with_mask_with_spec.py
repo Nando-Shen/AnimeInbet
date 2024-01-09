@@ -386,7 +386,7 @@ class SuperGlueT(nn.Module):
             iters=self.config.sinkhorn_iterations,
             ms=dim_m, ns=dim_n)
 
-
+        print("here too")
         # Get the matches with score above "match_threshold".
         return scores[:, :-1, :-1], scores0, scores1, mdesc0, mdesc1
        
