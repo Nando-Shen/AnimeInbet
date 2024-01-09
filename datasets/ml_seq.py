@@ -88,11 +88,11 @@ def ids_to_mat(id1, id2):
 
     pos12 = np.arange(len(id2))[None].repeat(len(id1), 0)
     pos21 = np.arange(len(id1))[None].repeat(len(id2), 0)
-    print(corr1.shape)
-    print(pos12.shape)
-    print(mat)
-    print(mat.astype(int).sum(1).astype(bool))
-    print(mat.transpose().astype(int).sum(1).astype(bool))
+    # print(corr1.shape)
+    # print(pos12.shape)
+    # print(mat)
+    # print(mat.astype(int).sum(1).astype(bool))
+    # print(mat.transpose().astype(int).sum(1).astype(bool))
     corr1[mat.astype(int).sum(1).astype(bool)] = pos12[mat]
     corr2[mat.transpose().astype(int).sum(1).astype(bool)] = pos21[mat.transpose()]
 
