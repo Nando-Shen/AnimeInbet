@@ -213,86 +213,86 @@ class MixamoLineArtMotionSequence(data.Dataset):
             v[v < 0] = 0
             labelt.append({'keypoints': v.astype(int), 'topo': t, 'id': id})
         #
-        # # make motion pseudo label
-        # motion = None
-        # motion01 = None
+        # make motion pseudo label
+        motion = None
+        motion01 = None
         #
-        # start_frame = 0
-        # gap = self.gap // 2 + 1
+        start_frame = 0
+        gap = self.gap // 2 + 1
 
 
         # ######### forward direction
-        # for ii in reversed(range(start_frame + 1, start_frame + 2*gap + 1)):
-        #     img1 = imgt[ii - 1]
-        #     img2 = imgt[ii]
-        #
-        #     v2d1 = labelt[ii - 1]['keypoints'].astype(int)
-        #     v2d2 = labelt[ii]['keypoints'].astype(int)
-        #
-        #     topo1 = labelt[ii - 1]['topo']
-        #     topo2 = labelt[ii ]['topo']
-        #
-        #     id1 = labelt[ii - 1]['id']
-        #     id2 = labelt[ii]['id']
-        #
+        for ii in reversed(range(start_frame + 1, start_frame + 2*gap + 1)):
+            img1 = imgt[ii - 1]
+            img2 = imgt[ii]
+
+            v2d1 = labelt[ii - 1]['keypoints'].astype(int)
+            v2d2 = labelt[ii]['keypoints'].astype(int)
+
+            topo1 = labelt[ii - 1]['topo']
+            topo2 = labelt[ii ]['topo']
+
+            id1 = labelt[ii - 1]['id']
+            id2 = labelt[ii]['id']
+
         #     if self.use_vs:
         #         id1 = np.arange(len(id1))
         #         id2 = np.arange(len(id2))
         #
-        #     _, match12, matc21 = ids_to_mat(id1, id2)
-        #
-        #     if ii <= start_frame + gap:
-        #         motion01 = matched_motion(v2d1, v2d2, match12.astype(int), motion01)
-        #         motion01 = unmatched_motion(topo1, v2d1, motion01, match12.astype(int))
-        #
-        #     motion = matched_motion(v2d1, v2d2, match12.astype(int), motion)
-        #     motion = unmatched_motion(topo1, v2d1, motion, match12.astype(int))
-        # motion0 = motion.copy()
-        #
-        # img2 = imgt[start_frame + gap]
-        #
-        # v2d1 = labelt[start_frame]['keypoints'].astype(int)
-        # source0_topo = labelt[start_frame]['topo']
-        #
-        # target = cv2.erode(img2, np.ones((3, 3), np.uint8), iterations=1)
-        #
-        # shift_plabel = v2d1 + motion01
-        # visible = np.ones(len(v2d1)).astype(float)
-        # visible[shift_plabel[:, 0] < 0] = 0
-        # visible[shift_plabel[:, 0] >= imgt[0].shape[0]] = 0
-        # visible[shift_plabel[:, 1] < 0] = 0
-        # visible[shift_plabel[:, 1] >= imgt[0].shape[0]] = 0
-        #
-        # # vertex visibility
-        # visible[visible == 1] = (target[:, :, 0][shift_plabel[visible == 1][:, 1], shift_plabel[visible == 1][:, 0]] < 255 ).astype(float)
-        #
-        # visible01 = visible.copy()
-        # v2d1s = shift_plabel
-        #
-        # # edge visibility
-        # for node, nbs in enumerate(source0_topo):
-        #     for nb in nbs:
-        #         if visible01[nb] and visible01[node] and ((v2d1s[node] - v2d1s[nb]) ** 2).sum() / (((v2d1[node] - v2d1[nb]) ** 2).sum() + 1e-7) > 25:
-        #             visible01[nb] = False
-        #             visible01[node] = False
+            _, match12, matc21 = ids_to_mat(id1, id2)
+
+            if ii <= start_frame + gap:
+                motion01 = matched_motion(v2d1, v2d2, match12.astype(int), motion01)
+                motion01 = unmatched_motion(topo1, v2d1, motion01, match12.astype(int))
+
+            motion = matched_motion(v2d1, v2d2, match12.astype(int), motion)
+            motion = unmatched_motion(topo1, v2d1, motion, match12.astype(int))
+        motion0 = motion.copy()
+
+        img2 = imgt[start_frame + gap]
+
+        v2d1 = labelt[start_frame]['keypoints'].astype(int)
+        source0_topo = labelt[start_frame]['topo']
+
+        target = cv2.erode(img2, np.ones((3, 3), np.uint8), iterations=1)
+
+        shift_plabel = v2d1 + motion01
+        visible = np.ones(len(v2d1)).astype(float)
+        visible[shift_plabel[:, 0] < 0] = 0
+        visible[shift_plabel[:, 0] >= imgt[0].shape[0]] = 0
+        visible[shift_plabel[:, 1] < 0] = 0
+        visible[shift_plabel[:, 1] >= imgt[0].shape[0]] = 0
+
+        # vertex visibility
+        visible[visible == 1] = (target[:, :, 0][shift_plabel[visible == 1][:, 1], shift_plabel[visible == 1][:, 0]] < 255 ).astype(float)
+
+        visible01 = visible.copy()
+        v2d1s = shift_plabel
+
+        # edge visibility
+        for node, nbs in enumerate(source0_topo):
+            for nb in nbs:
+                if visible01[nb] and visible01[node] and ((v2d1s[node] - v2d1s[nb]) ** 2).sum() / (((v2d1[node] - v2d1[nb]) ** 2).sum() + 1e-7) > 25:
+                    visible01[nb] = False
+                    visible01[node] = False
         #
         # ######## backward direction
-        # motion = None
-        # motion21 = None
-        #
-        # for ii in range(start_frame + 1, start_frame + gap + gap + 1):
-        #     img2 = imgt[ii - 1]
-        #     img1 = imgt[ii]
-        #
-        #     v2d2 = labelt[ii - 1]['keypoints'].astype(int)
-        #     v2d1 = labelt[ii]['keypoints'].astype(int)
-        #
-        #     topo2 = labelt[ii - 1]['topo']
-        #     topo1 = labelt[ii ]['topo']
-        #
-        #
-        #     id1 = labelt[ii]['id']
-        #     id2 = labelt[ii - 1]['id']
+        motion = None
+        motion21 = None
+
+        for ii in range(start_frame + 1, start_frame + gap + gap + 1):
+            img2 = imgt[ii - 1]
+            img1 = imgt[ii]
+
+            v2d2 = labelt[ii - 1]['keypoints'].astype(int)
+            v2d1 = labelt[ii]['keypoints'].astype(int)
+
+            topo2 = labelt[ii - 1]['topo']
+            topo1 = labelt[ii ]['topo']
+
+
+            id1 = labelt[ii]['id']
+            id2 = labelt[ii - 1]['id']
         #     if self.use_vs:
         #         id1 = np.arange(len(id1))
         #         id2 = np.arange(len(id2))
@@ -305,32 +305,32 @@ class MixamoLineArtMotionSequence(data.Dataset):
         #     motion = matched_motion(v2d1, v2d2, match12.astype(int), motion)
         #     motion = unmatched_motion(topo1, v2d1, motion, match12.astype(int))
         #
-        # motion2 = motion.copy()
-        #
-        # img1 = imgt[start_frame + 2*gap]
-        # img2 = imgt[start_frame + gap]
-        #
-        # v2d1 = labelt[start_frame + 2*gap]['keypoints'].astype(int)
-        # source2_topo = labelt[start_frame + 2*gap]['topo']
-        #
-        # shift_plabel = v2d1 + motion21
-        # visible = np.ones(len(v2d1)).astype(float)
-        # visible[shift_plabel[:, 0] < 0] = 0
-        # visible[shift_plabel[:, 0] >= imgt[0].shape[0]] = 0
-        # visible[shift_plabel[:, 1] < 0] = 0
-        # visible[shift_plabel[:, 1] >= imgt[0].shape[0]] = 0
-        #
-        # visible[visible == 1] = (target[:, :, 0][shift_plabel[visible == 1][:, 1], shift_plabel[visible == 1][:, 0]] < 255 ).astype(float)
-        #
-        # visible21 = visible.copy()
-        #
-        # v2d1s = shift_plabel
-        #
-        # for node, nbs in enumerate(source2_topo):
-        #     for nb in nbs:
-        #         if visible21[nb] and visible21[node] and ((v2d1s[node] - v2d1s[nb]) ** 2).sum() / (((v2d1[node] - v2d1[nb]) ** 2).sum() + 1e-7) > 25:
-        #             visible21[nb] = False
-        #             visible21[node] = False
+        motion2 = motion.copy()
+
+        img1 = imgt[start_frame + 2*gap]
+        img2 = imgt[start_frame + gap]
+
+        v2d1 = labelt[start_frame + 2*gap]['keypoints'].astype(int)
+        source2_topo = labelt[start_frame + 2*gap]['topo']
+
+        shift_plabel = v2d1 + motion21
+        visible = np.ones(len(v2d1)).astype(float)
+        visible[shift_plabel[:, 0] < 0] = 0
+        visible[shift_plabel[:, 0] >= imgt[0].shape[0]] = 0
+        visible[shift_plabel[:, 1] < 0] = 0
+        visible[shift_plabel[:, 1] >= imgt[0].shape[0]] = 0
+
+        visible[visible == 1] = (target[:, :, 0][shift_plabel[visible == 1][:, 1], shift_plabel[visible == 1][:, 0]] < 255 ).astype(float)
+
+        visible21 = visible.copy()
+
+        v2d1s = shift_plabel
+
+        for node, nbs in enumerate(source2_topo):
+            for nb in nbs:
+                if visible21[nb] and visible21[node] and ((v2d1s[node] - v2d1s[nb]) ** 2).sum() / (((v2d1[node] - v2d1[nb]) ** 2).sum() + 1e-7) > 25:
+                    visible21[nb] = False
+                    visible21[node] = False
 
 
         ###### prepare other data
@@ -359,10 +359,10 @@ class MixamoLineArtMotionSequence(data.Dataset):
         v2d1 = torch.from_numpy(v2d1)
         v2d2 = torch.from_numpy(v2d2)
 
-        # visible01 = torch.from_numpy(visible01)
-        # visible21 = torch.from_numpy(visible21)
-        # motion0 = torch.from_numpy(motion0)
-        # motion2 = torch.from_numpy(motion2)
+        visible01 = torch.from_numpy(visible01)
+        visible21 = torch.from_numpy(visible21)
+        motion0 = torch.from_numpy(motion0)
+        motion2 = torch.from_numpy(motion2)
 
         v2d1[v2d1 > imgt[0].shape[0] - 1 ] = imgt[0].shape[0] - 1
         v2d1[v2d1 < 0] = 0
@@ -370,26 +370,26 @@ class MixamoLineArtMotionSequence(data.Dataset):
         v2d2[v2d2 < 0] = 0
 
         
-        # id1 = labelt[start_frame]['id']
-        # id2 = labelt[-1]['id']
+        id1 = labelt[start_frame]['id']
+        id2 = labelt[-1]['id']
         # if self.use_vs:
         #     id1 = np.arange(len(id1))
         #     id2 = np.arange(len(id2))
 
-        # mat_index, corr1, corr2 = ids_to_mat(id1, id2)
-        # mat_index = torch.from_numpy(mat_index).float()
-        # corr1 = torch.from_numpy(corr1).float()
-        # corr2 = torch.from_numpy(corr2).float()
+        mat_index, corr1, corr2 = ids_to_mat(id1, id2)
+        mat_index = torch.from_numpy(mat_index).float()
+        corr1 = torch.from_numpy(corr1).float()
+        corr2 = torch.from_numpy(corr2).float()
 
         if self.is_train:
             v2d1 = torch.nn.functional.pad(v2d1, (0, 0, 0, self.max_len - m), mode='constant', value=0)
             v2d2 = torch.nn.functional.pad(v2d2, (0, 0, 0, self.max_len - n), mode='constant', value=0)
-            # corr1 = torch.nn.functional.pad(corr1, (0, self.max_len - m), mode='constant', value=0)
-            # corr2 = torch.nn.functional.pad(corr2, (0, self.max_len - n), mode='constant', value=0)
-            # motion0 = torch.nn.functional.pad(motion0, (0, 0, 0, self.max_len - m), mode='constant', value=0)
-            # motion2 = torch.nn.functional.pad(motion2, (0, 0, 0, self.max_len - n), mode='constant', value=0)
-            # visible01 = torch.nn.functional.pad(visible01, (0, self.max_len - m), mode='constant', value=0)
-            # visible21 = torch.nn.functional.pad(visible21, (0, self.max_len - n), mode='constant', value=0)
+            corr1 = torch.nn.functional.pad(corr1, (0, self.max_len - m), mode='constant', value=0)
+            corr2 = torch.nn.functional.pad(corr2, (0, self.max_len - n), mode='constant', value=0)
+            motion0 = torch.nn.functional.pad(motion0, (0, 0, 0, self.max_len - m), mode='constant', value=0)
+            motion2 = torch.nn.functional.pad(motion2, (0, 0, 0, self.max_len - n), mode='constant', value=0)
+            visible01 = torch.nn.functional.pad(visible01, (0, self.max_len - m), mode='constant', value=0)
+            visible21 = torch.nn.functional.pad(visible21, (0, self.max_len - n), mode='constant', value=0)
 
             mask0, mask1 = torch.zeros(self.max_len).float(), torch.zeros(self.max_len).float()
             mask0[:m] = 1
@@ -432,8 +432,8 @@ class MixamoLineArtMotionSequence(data.Dataset):
                 'imaget': imgt,
                 'image0': img1,
                 'image1': img2,
-                # 'motion0': motion0,
-                # 'motion1': motion2,
+                'motion0': motion0,
+                'motion1': motion2,
                 # 'visibility0': visible01,
                 # 'visibility1': visible21,
                 #
