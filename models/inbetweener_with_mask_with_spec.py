@@ -615,7 +615,7 @@ class InbetweenerTM(nn.Module):
             loss_mean = torch.mean(loss)
 
             b, _, _ = motion_pred0.size()
-            return [{
+            return {
                 'keypoints0t': kpt0t,
                 'keypoints1t': kpt1t,
                 'vb0': (vb0 > 0).float(),
@@ -625,7 +625,7 @@ class InbetweenerTM(nn.Module):
                 'loss': loss_mean,
                 'EPE': EPE,
                 'Visibility Acc': VB_Acc
-            }]
+            }
         else:
             return {
                 'loss': -1,
