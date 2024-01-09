@@ -589,8 +589,7 @@ class InbetweenerTM(nn.Module):
         kpt0t = kpts0 + motion_output0 / 2
         kpt1t = kpts1 + motion_output1 / 2
 
-        
-
+        print("to return")
         if 'motion0' in data and 'motion1' in data:
             loss_motion = torch.nn.functional.l1_loss(motion_pred0, data['motion0'][:, :mmax]) +\
                 torch.nn.functional.l1_loss(motion_pred1, data['motion1'][:, :nmax])
@@ -615,7 +614,6 @@ class InbetweenerTM(nn.Module):
             loss_mean = torch.mean(loss)
 
             b, _, _ = motion_pred0.size()
-            print("to return")
             return {
                 'keypoints0t': kpt0t,
                 'keypoints1t': kpt1t,
