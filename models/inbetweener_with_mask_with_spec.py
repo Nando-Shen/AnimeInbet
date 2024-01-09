@@ -475,6 +475,7 @@ class InbetweenerTM(nn.Module):
 
 
         kpts0, kpts1 = data['keypoints0'][:,:mmax].float(), data['keypoints1'][:,:nmax].float() # BM2, BN2 
+        print("already here")
 
         motion_pred0 = torch.softmax(score01, dim=-1) @ kpts1 - kpts0
         motion_pred1 = torch.softmax(score01.transpose(1, 2), dim=-1) @ kpts0 - kpts1
@@ -482,7 +483,7 @@ class InbetweenerTM(nn.Module):
         motion_pred0 = torch.softmax(score0, dim=-1) @ motion_pred0
         motion_pred1 = torch.softmax(score1, dim=-1) @ motion_pred1
 
-
+        print("then here")
         max0, max1 = score01.max(2), score01.max(1)
         indices0, indices1 = max0.indices, max1.indices
         mutual0 = arange_like(indices0, 1)[None] == indices1.gather(1, indices0)
@@ -614,7 +615,7 @@ class InbetweenerTM(nn.Module):
             loss_mean = torch.mean(loss)
 
             b, _, _ = motion_pred0.size()
-
+            print("to return")
             return {
                 'keypoints0t': kpt0t,
                 'keypoints1t': kpt1t,
