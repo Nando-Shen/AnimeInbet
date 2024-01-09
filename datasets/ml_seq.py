@@ -467,8 +467,8 @@ class MixamoLineArtMotionSequence(data.Dataset):
                 'imaget': imgt,
                 'image0': img1,
                 'image1': img2,
-                # 'motion0': motion0,
-                # 'motion1': motion2,
+                'motion0': motion0,
+                'motion1': motion2,
                 # 'visibility0': visible01,
                 # 'visibility1': visible21,
                 #
@@ -487,8 +487,8 @@ class MixamoLineArtMotionSequence(data.Dataset):
             return{
                 'keypoints0': v2d1,
                 'keypoints1': v2d2,
-                # 'topo0': topo1,
-                # 'topo1': topo2,
+                'topo0': topo1,
+                'topo1': topo2,
                 # 'id0': id1,
                 # 'id1': id2,
                 'adj_mat0': adj1,
@@ -496,8 +496,8 @@ class MixamoLineArtMotionSequence(data.Dataset):
                 'spec0': spec0,
                 'spec1': spec1,
                 'imaget': imgt,
-                # 'motion0': motion0,
-                # 'motion1': motion2,
+                'motion0': motion0,
+                'motion1': motion2,
                 # 'visibility0': visible01,
                 # 'visibility1': visible21,
 
@@ -505,8 +505,8 @@ class MixamoLineArtMotionSequence(data.Dataset):
                 'image1': img2,
 
                 # 'all_matches': corr1,
-                # 'm01': corr1,
-                # 'm10': corr2,
+                'm01': corr1,
+                'm10': corr2,
                 'ms': m,
                 'ns': n,
                 'mask0': mask0,
