@@ -302,9 +302,7 @@ class SuperGlueT(nn.Module):
 
         ori_mask0, ori_mask1 = data['mask0'].float(), data['mask1'].float()
         dim_m, dim_n = data['ms'].float(), data['ns'].float()
-        print("m: {}".format(dim_m))
-        print("n: {}".format(dim_n))
-        print("ktps: {}".format(kpts0.shape))
+
         # spectual embedding of adj matrices
         # here I find that online computation of spectrals are too slow during training
         # so the spectrual embedding is moved to dataset pipeline 
@@ -323,8 +321,7 @@ class SuperGlueT(nn.Module):
 
         # image context embedding
         desc0, desc1 = self.vertex_desc(data['image0'], kpts0.float()), self.vertex_desc(data['image1'], kpts1.float())
-        print(desc0.shape)
-        print(spec0.shape)
+
         # add topological embedding
         desc0 = desc0 + self.tenc(desc0.new_tensor(spec0))
         desc1 = desc1 + self.tenc(desc1.new_tensor(spec1))
@@ -386,7 +383,6 @@ class SuperGlueT(nn.Module):
             iters=self.config.sinkhorn_iterations,
             ms=dim_m, ns=dim_n)
 
-        print("here too")
         # Get the matches with score above "match_threshold".
         return scores[:, :-1, :-1], scores0, scores1, mdesc0, mdesc1
        
@@ -470,12 +466,10 @@ class InbetweenerTM(nn.Module):
         nmax = dim_n.int().max()
         # with torch.no_grad():
         #     self.corr.eval()
-        print("already here")
         score01, score0, score1, dec0, dec1 = self.corr(data)
 
 
         kpts0, kpts1 = data['keypoints0'][:,:mmax].float(), data['keypoints1'][:,:nmax].float() # BM2, BN2 
-        print("already here")
 
         motion_pred0 = torch.softmax(score01, dim=-1) @ kpts1 - kpts0
         motion_pred1 = torch.softmax(score01.transpose(1, 2), dim=-1) @ kpts0 - kpts1
@@ -483,7 +477,6 @@ class InbetweenerTM(nn.Module):
         motion_pred0 = torch.softmax(score0, dim=-1) @ motion_pred0
         motion_pred1 = torch.softmax(score1, dim=-1) @ motion_pred1
 
-        print("then here")
         max0, max1 = score01.max(2), score01.max(1)
         indices0, indices1 = max0.indices, max1.indices
         mutual0 = arange_like(indices0, 1)[None] == indices1.gather(1, indices0)
@@ -590,7 +583,6 @@ class InbetweenerTM(nn.Module):
         kpt1t = kpts1 + motion_output1 / 2
 
         if 'motion0' in data and 'motion1' in data:
-            print("to return")
 
             loss_motion = torch.nn.functional.l1_loss(motion_pred0, data['motion0'][:, :mmax]) +\
                 torch.nn.functional.l1_loss(motion_pred1, data['motion1'][:, :nmax])
