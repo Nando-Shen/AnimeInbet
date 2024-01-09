@@ -617,13 +617,13 @@ class InbetweenerTM(nn.Module):
             return {
                 'keypoints0t': kpt0t,
                 'keypoints1t': kpt1t,
-                'vb0': (vb0 > 0).float(),
-                'vb1': (vb1 > 0).float(),
-                'r0': motion_output0,
-                'r1': motion_output1,
-                'loss': loss_mean,
-                'EPE': EPE,
-                'Visibility Acc': VB_Acc
+                # 'vb0': (vb0 > 0).float(),
+                # 'vb1': (vb1 > 0).float(),
+                # 'r0': motion_output0,
+                # 'r1': motion_output1,
+                # 'loss': loss_mean,
+                # 'EPE': EPE,
+                # 'Visibility Acc': VB_Acc
             }
         else:
             return {
