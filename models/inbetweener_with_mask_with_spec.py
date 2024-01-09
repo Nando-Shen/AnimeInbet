@@ -619,6 +619,7 @@ class InbetweenerTM(nn.Module):
                 'Visibility Acc': VB_Acc
             }
         else:
+            print("aaaaaa")
             return {
                 'loss': -1,
                 'skip_train': True,
