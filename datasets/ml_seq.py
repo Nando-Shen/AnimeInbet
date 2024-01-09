@@ -158,7 +158,7 @@ class MixamoLineArtMotionSequence(data.Dataset):
         self.label_list = []
 
         label_root = osp.join(root, split, 'labels')
-        self.use_vs = False
+        self.use_vs = True
         if use_vs:
             print('>>>>>>>> Using VS labels')
             self.use_vs = True
@@ -240,9 +240,9 @@ class MixamoLineArtMotionSequence(data.Dataset):
             id1 = labelt[ii - 1]['id']
             id2 = labelt[ii]['id']
 
-        #     if self.use_vs:
-        #         id1 = np.arange(len(id1))
-        #         id2 = np.arange(len(id2))
+            if self.use_vs:
+                id1 = np.arange(len(id1))
+                id2 = np.arange(len(id2))
         #
             _, match12, matc21 = ids_to_mat(id1, id2)
 
