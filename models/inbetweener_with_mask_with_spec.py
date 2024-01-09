@@ -623,8 +623,8 @@ class InbetweenerTM(nn.Module):
             return {
                 'loss': -1,
                 'skip_train': True,
-                'keypointst0': kpts0 + motion_output0,
-                'keypointst1': kpts1 + motion_output1,
+                'keypointst0': kpts0,
+                'keypointst1': kpts1,
                 'vb0': vb0,
                 'vb1': vb1,
             }
