@@ -217,7 +217,7 @@ class MixamoLineArtMotionSequence(data.Dataset):
             v[v > imgt[0].shape[0] - 1] = imgt[0].shape[0] - 1
             v[v < 0] = 0
             labelt.append({'keypoints': v.astype(int), 'topo': t, 'id': id})
-        #
+
         # make motion pseudo label
         motion = None
         motion01 = None
@@ -280,7 +280,7 @@ class MixamoLineArtMotionSequence(data.Dataset):
                 if visible01[nb] and visible01[node] and ((v2d1s[node] - v2d1s[nb]) ** 2).sum() / (((v2d1[node] - v2d1[nb]) ** 2).sum() + 1e-7) > 25:
                     visible01[nb] = False
                     visible01[node] = False
-        #
+
         # ######## backward direction
         motion = None
         motion21 = None
