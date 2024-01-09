@@ -68,11 +68,11 @@ class DraftRefine():
             checkpoint = torch.load(self.config.init_weight)
             model.load_state_dict(checkpoint['model'])
 
-        # if torch.cuda.is_available():
-        #     model.cuda() # make sure it trains on GPU
-        # else:
-        #     print("### CUDA not available ###")
-            # return
+        if torch.cuda.is_available():
+            model.cuda() # make sure it trains on GPU
+        else:
+            print("### CUDA not available ###")
+            return
         optimizer = self.optimizer
         schedular = self.schedular
         mean_loss = []
