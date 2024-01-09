@@ -93,7 +93,7 @@ from .chamfer_distance import cd_score
 
 
 def visualize(dict):
-    print(dict['keypoints0'].size(), flush=True)
+    print(dict['image0'].size(), flush=True)
     img1 = ((dict['image0'][0].permute(1, 2, 0).float().numpy() + 1.0) * 255 / 2).astype(np.uint8).copy()
     original_target = ((dict['imaget'][0].permute(1, 2, 0).float().numpy() + 1.0) * 255 / 2).astype(np.uint8).copy()
     # img1p = ((dict['image0'].permute(1, 2, 0).float().numpy() + 1.0) * 255 / 2).astype(int).copy()
