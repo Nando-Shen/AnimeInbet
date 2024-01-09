@@ -377,9 +377,9 @@ class MixamoLineArtMotionSequence(data.Dataset):
         
         id1 = labelt[start_frame]['id']
         id2 = labelt[-1]['id']
-        # if self.use_vs:
-        #     id1 = np.arange(len(id1))
-        #     id2 = np.arange(len(id2))
+        if self.use_vs:
+            id1 = np.arange(len(id1))
+            id2 = np.arange(len(id2))
 
         mat_index, corr1, corr2 = ids_to_mat(id1, id2)
         mat_index = torch.from_numpy(mat_index).float()
@@ -402,11 +402,11 @@ class MixamoLineArtMotionSequence(data.Dataset):
         else:
             mask0, mask1 = torch.ones(m).float(), torch.ones(n).float()
         
-        # for ii in range(len(topo1)):
-        #     # if not len(topo1[ii]):
-        #     topo1[ii].append(ii)
-        # for ii in range(len(topo2)):
-        #     topo2[ii].append(ii)
+        for ii in range(len(topo1)):
+            # if not len(topo1[ii]):
+            topo1[ii].append(ii)
+        for ii in range(len(topo2)):
+            topo2[ii].append(ii)
         adj1 = sknetwork.data.from_adjacency_list(topo1, matrix_only=True, reindex=False).toarray()
         adj2 = sknetwork.data.from_adjacency_list(topo2, matrix_only=True, reindex=False).toarray()
         print("topo:  {}  adj1:  {}".format(len(topo1),len(adj1)))
