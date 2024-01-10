@@ -426,8 +426,8 @@ class MixamoLineArtMotionSequence(data.Dataset):
             return{
                 'keypoints0': v2d1,
                 'keypoints1': v2d2,
-                # 'topo0': [topo1],
-                # 'topo1': [topo2],
+                'topo0': [topo1],
+                'topo1': [topo2],
                 # 'id0': id1,
                 # 'id1': id2,
                 'adj_mat0': adj1,

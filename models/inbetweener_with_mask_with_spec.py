@@ -557,26 +557,26 @@ class InbetweenerTM(nn.Module):
             
             kpt0t = kpts0 + motion_output0 * 1
             kpt1t = kpts1 + motion_output1 * 1
-            if 'topo0' in data and 'topo1' in data:
-                ##  print(len(data['topo0'][0]), len(data['topo1']), flush=True)
-                for node, nbs in enumerate(data['topo0'][0]):
-                    for nb in nbs:
-
-                        center = ((kpt0t[0, node] + kpt0t[0, nb]) * 0.5).int()[0]
-                        if center[0] >= 720 or center[1] >= 720:
-                            continue
-
-                        if vb0[0, nb] > 0 and vb0[0, node] > 0 and im1_erode[0,:, center[1], center[0]].mean() > 0.8:
-                            vb0[0, nb] = -1
-                            vb0[0, node] = -1
-
-                for node, nbs in enumerate(data['topo1'][0]):
-                    for nb in nbs:
-                        
-                        center = ((kpt1t[0, node] + kpt1t[0, nb]) * 0.5).int()[0]
-                        if vb1[0, nb] > 0  and vb1[0, node] > 0 and im0_erode[0,:, center[1], center[0]].mean() > 0.8:
-                            vb1[0, nb] = -1
-                            vb1[0, node] = -1
+            # if 'topo0' in data and 'topo1' in data:
+            #     ##  print(len(data['topo0'][0]), len(data['topo1']), flush=True)
+            #     for node, nbs in enumerate(data['topo0'][0]):
+            #         for nb in nbs:
+            #
+            #             center = ((kpt0t[0, node] + kpt0t[0, nb]) * 0.5).int()[0]
+            #             if center[0] >= 720 or center[1] >= 720:
+            #                 continue
+            #
+            #             if vb0[0, nb] > 0 and vb0[0, node] > 0 and im1_erode[0,:, center[1], center[0]].mean() > 0.8:
+            #                 vb0[0, nb] = -1
+            #                 vb0[0, node] = -1
+            #
+            #     for node, nbs in enumerate(data['topo1'][0]):
+            #         for nb in nbs:
+            #
+            #             center = ((kpt1t[0, node] + kpt1t[0, nb]) * 0.5).int()[0]
+            #             if vb1[0, nb] > 0  and vb1[0, node] > 0 and im0_erode[0,:, center[1], center[0]].mean() > 0.8:
+            #                 vb1[0, nb] = -1
+            #                 vb1[0, node] = -1
 
         
 
