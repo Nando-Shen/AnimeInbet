@@ -323,6 +323,7 @@ class SuperGlueT(nn.Module):
         desc0, desc1 = self.vertex_desc(data['image0'], kpts0.float()), self.vertex_desc(data['image1'], kpts1.float())
 
         # add topological embedding
+        print(spec0.shape)
         desc0 = desc0 + self.tenc(desc0.new_tensor(spec0))
         desc1 = desc1 + self.tenc(desc1.new_tensor(spec1))
 
