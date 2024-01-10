@@ -301,7 +301,8 @@ class DraftRefine():
                 img_vis = visualize(pred)
                 # mean_cd.append(cd.item())
                 file_name = pred['file_name'][0].split('/')
-                cv2.imwrite(os.path.join(config.imwrite_dir, (file_name[-2] + '_' + file_name[-1]) + 'png'), img_vis)
+                os.mkdir(os.path.join(config.imwrite_dir, file_name[-2]),  exist_ok=True)
+                cv2.imwrite(os.path.join(config.imwrite_dir, file_name[-2] , file_name[-1] + 'png'), img_vis)
 
                 # cv2.imwrite(os.path.join(eval_output_dir, pred['file_name'][0].replace('/', '_') + '.jpg'), img_vis)
                 
