@@ -56,3 +56,5 @@ save_per_epochs: 1
 log_per_updates: 1
 test_freq: 10
 seed: 42
+
+need_not_train_data: True
