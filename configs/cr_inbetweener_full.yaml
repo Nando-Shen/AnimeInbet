@@ -21,7 +21,9 @@ optimizer:
 
 data:
     train:
-        root: '/share/kuhu6123/atd12k_points/atd12k_points'
+#        root: '/share/kuhu6123/atd12k_points/atd12k_points'
+        root: '/home/kuhu6123/jshe2377/AnimeRun'
+
         batch_size: 1
         gap: 1
         type: 'train'
@@ -29,7 +31,8 @@ data:
         action: None
         mode: 'train'
     test:
-        root: '/share/kuhu6123/atd12k_points/atd12k_points'
+#        root: '/share/kuhu6123/atd12k_points/atd12k_points'
+        root: '/home/kuhu6123/jshe2377/AnimeRun'
         batch_size: 1
         gap: 1
         type: 'all'
